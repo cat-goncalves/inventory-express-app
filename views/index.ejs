@@ -11,23 +11,24 @@
 
 <body>
   <h1>Inventory</h1>
-  <h2>Add an item along with its price to update the inventory:</h2>
+  <h2>Add an item along with its price to add it to your inventory list. Once you have added an item, update the quantity to calculate the total cost.</h2>
 
 
   <h3>Inventory</h3>
   <ul class="messages">
     <% for(var i=0; i<items.length; i++) {%>
       <li class="message">
-        <span>
-          <%= items[i].item %>
-        </span>
-        <span>&#36;<%= items[i].price %></span>
-        <form action="/update-units" method="post">
+        <span> Item: <%= items[i].item %></span>
+        <span>Price: &#36;<%= items[i].price %></span>
+        <% let total = items[i].price * items[i].quantity %>
+        <span>Quantity: <%= items[i].quantity %> units</span>
+        <span>Total Cost: &#36;<%= total %></span>
+        <form >
           <input type="number" step="0.1" min="0" placeholder="units" name="units">
-          <button class="unitSubmit" type="submit">update</button>
+          <button class="unitSubmit" type="button">update</button>
         </form>
         <span>
-          Shelf Cost: <%= items[i].price * units[i].unit %>
+
         </span>
         <span><i class="fa fa-trash" aria-hidden="true"></i></span>
       </li>
