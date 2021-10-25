@@ -42,6 +42,28 @@ app.post('/inventory', (req, res) => {
   })
 })
 
+app.post('/update-units', (req, res) => {
+  db.collection('units').insertOne({
+    units: req.body.unit, 
+  }, (err, result) => {
+    if (err) return console.log(err)
+    console.log('saved to database')
+    res.redirect('/')
+  })
+  db.collection('units').findOneAndUpdate({units: req.body.unit}, {
+    $set: {
+      units: req.body.unit
+    }
+  }, {
+    sort: {_id: -1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
+
 app.put('/inventory', (req, res) => {
   db.collection('items')
   .findOneAndUpdate({items: req.body.item, price: req.body.price}, {
